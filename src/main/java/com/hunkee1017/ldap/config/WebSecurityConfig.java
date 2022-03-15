@@ -13,22 +13,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .ldapAuthentication()
-            .userDnPatterns("uid={0},ou=people")
-            .groupSearchBase("ou=groups")
-            .contextSource()
-            .url("ldap://localhost:8389/dc=springframework,dc=org")
-            .and()
-            .passwordCompare()
-            .passwordEncoder(new BCryptPasswordEncoder())
-            .passwordAttribute("userPassword");
+                .userDnPatterns("uid={0},ou=people")
+                .groupSearchBase("ou=groups")
+                .contextSource()
+                    .url("ldap://localhost:8389/dc=springframework,dc=org")
+                    .and()
+                .passwordCompare()
+                    .passwordEncoder(new BCryptPasswordEncoder())
+                    .passwordAttribute("userPassword");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .headers()
+                .frameOptions().disable()
+                .and()
+            .cors().disable()
+            .csrf().disable()
             .authorizeRequests()
-            .anyRequest().fullyAuthenticated()
-            .and()
-            .formLogin();
+                .anyRequest().fullyAuthenticated()
+                .and()
+            .formLogin()
+                .defaultSuccessUrl("/auth");
     }
 }

@@ -1,14 +1,24 @@
 spring:
   ldap:
     embedded:
-      ldif: classpath:test-server.lidf
-
+      ldif: classpath:test-server.ldif
+      port: 8389
+      base-dn: dc=springframework,dc=org
   h2:
     console:
       enabled: true
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:./db/ldap;AUTO_SERVER=TRUE
     username: sa
     password:
+  session:
+    store-type: jdbc
+    jdbc:
+      platform: h2
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
