@@ -14,7 +14,7 @@
 .idea/**/shelf
 
 # AWS User-specific
-.idea/**/aws.xml
+.idea/**
 
 # Generated files
 .idea/**/contentModel.xml
@@ -170,6 +170,7 @@ Temporary Items
 .gradle
 **/build/
 !src/**/build/
+gradle/**
 
 # Ignore Gradle GUI config
 gradle-app.setting
